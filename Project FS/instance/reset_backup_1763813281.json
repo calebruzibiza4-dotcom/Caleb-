@@ -1,0 +1,14 @@
+{
+  "customers": [
+    {
+      "id": 1,
+      "name": "E",
+      "email": "calebruzibiza@gmail.com"
+    },
+    {
+      "id": 2,
+      "name": "Nocta",
+      "email": "nocta@gmail.com"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Support Requests</h1>
+    <a class="btn btn-primary" href="/requests/new">New Request</a>
+  </div>
+  <table class="table table-striped">
+    <thead><tr><th>Title</th><th>Customer</th><th>Scheduled</th><th>Priority</th><th>Status</th></tr></thead>
+    <tbody>
+      {% for r in requests %}
+        <tr>
+          <td>{{ r.title }}</td>
+          <td>{{ r.customer.name if r.customer else '-' }}</td>
+          <td>{{ r.scheduled_for.strftime('%Y-%m-%d %H:%M') if r.scheduled_for else '-' }}</td>
+          <td>{{ r.priority }}</td>
+          <td>{{ r.status }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="5">No requests yet</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

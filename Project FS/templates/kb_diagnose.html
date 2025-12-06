@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Diagnose Problem{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Diagnose a Problem</h2>
+  <p>Describe the symptoms or error messages and we'll try to match relevant knowledge base articles.</p>
+  <form method="post" action="{{ url_for('kb_diagnose') }}">
+    <div class="mb-3">
+      <label class="form-label">Symptoms / Error messages</label>
+      <textarea class="form-control form-control-lg" name="symptoms" rows="5" placeholder="e.g. Laptop won't boot, shows circle and then black screen">{{ query }}</textarea>
+    </div>
+    <button class="btn btn-primary btn-lg" type="submit">Find Solutions</button>
+  </form>
+
+  <hr />
+
+  <div class="row mt-4">
+    <div class="col-md-7">
+      {% if results %}
+        <h4>Matches</h4>
+        <div class="list-group">
+          {% for r in results %}
+            <a class="list-group-item list-group-item-action mb-2 p-3 shadow-sm rounded" href="{{ url_for('kb_view', id=r.article.id) }}">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ r.article.title }}</h5>
+                <small class="text-muted">Score: {{ r.score }}</small>
+              </div>
+              <p class="mb-1 text-muted small">{{ r.snippet|e }}</p>
+              <small class="text-muted">Tags: {{ r.article.tags }}</small>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        {% if query %}
+          <div class="alert alert-warning mt-3">No matches found for "{{ query }}". Try broader or different keywords.</div>
+        {% else %}
+          <p class="text-muted mt-3">No matches yet. Try more keywords or explain the issue in plain language.</p>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    <div class="col-md-5">
+      <h4>Suggestions</h4>
+      <div class="card shadow-sm">
+        <div class="card-body">
+          {% if suggestions %}
+            <ul class="list-unstyled">
+              {% for s in suggestions %}
+                <li class="mb-2">
+                  {% if s.article_id %}
+                    <a href="{{ url_for('kb_view', id=s.article_id) }}" class="fw-semibold">{{ s.suggestion }}</a>
+                  {% else %}
+                    <span>{{ s.suggestion }}</span>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="text-muted">No suggestions available. Try rephrasing the problem.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

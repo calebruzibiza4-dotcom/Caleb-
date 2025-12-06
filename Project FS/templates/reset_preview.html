@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Reset Preview</h1>
+  <div class="card p-3 mb-3">
+    <p>This preview shows how many records will be removed if you confirm a full reset.</p>
+    <ul>
+      <li>Customers: <strong>{{cust_count}}</strong></li>
+      <li>Support requests: <strong>{{req_count}}</strong></li>
+      <li>Spare parts: <strong>{{part_count}}</strong></li>
+      <li>Knowledge articles: <strong>{{kb_count}}</strong></li>
+    </ul>
+    <p class="text-danger">Warning: this action will permanently delete all data and recreate empty tables.</p>
+  </div>
+
+  <form method="post" action="/reset" onsubmit="return confirm('Are you sure you want to permanently reset all data?');">
+    <input type="hidden" name="token" value="{{token}}">
+    <button class="btn btn-danger">Confirm Reset</button>
+    <a class="btn btn-secondary" href="/dashboard">Cancel</a>
+  </form>
+  <hr>
+  <a class="btn btn-outline-primary" href="/export">Download JSON Backup</a>
+{% endblock %}

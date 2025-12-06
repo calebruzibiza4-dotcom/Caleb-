@@ -1,0 +1,12 @@
+:root{
+	--primary:#0d6efd;
+	--muted:#6c757d;
+}
+body{ background: linear-gradient(180deg,#f6f9fb 0%, #ffffff 100%); color:#222; }
+.card{ box-shadow: 0 8px 24px rgba(13,110,253,0.06); border-radius:10px; }
+.navbar-brand{ font-weight:700; letter-spacing:0.4px; }
+.btn-primary{ background:var(--primary); border-color:var(--primary); }
+.container main{ padding-bottom:40px; }
+.hero{ padding:36px 0; }
+.kb-article{ background:#fff; padding:18px; border-radius:8px; }
+.footer{ padding:24px 0; color:var(--muted); font-size:0.9rem; }

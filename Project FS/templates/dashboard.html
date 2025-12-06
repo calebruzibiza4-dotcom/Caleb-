@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Dashboard</h1>
+    <div>
+      <a class="btn btn-outline-danger btn-sm" href="/reset">Reset All Data (Preview)</a>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <div class="card p-3 mb-3">
+        <h6 class="mb-2">Stats</h6>
+        <p class="mb-1 small">Total requests: <strong>{{total}}</strong></p>
+        <p class="mb-1 small">Completed: <strong>{{done}}</strong></p>
+        <p class="mb-0 small">Average time (hours): <strong>{{avg_time}}</strong></p>
+      </div>
+      <div class="card p-3">
+        <h6 class="mb-2">Low stock parts</h6>
+        <ul class="small mb-0">
+          {% for p in parts_low %}
+            <li>{{p.name}} ({{p.quantity}})</li>
+          {% else %}
+            <li>All good</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card p-3 mb-3">
+        <h6 class="mb-2">Top Issues</h6>
+        <canvas id="issuesChart" height="120"></canvas>
+      </div>
+      <div class="card p-3">
+        <h6 class="mb-2">Jobs by location</h6>
+        <canvas id="jobsChart" height="120"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card p-3">
+        <h6 class="mb-2">Rating Distribution</h6>
+        <canvas id="ratingChart" height="120"></canvas>
+      </div>
+    </div>
+  </div>
+  <script>
+    const issuesLabels = [{% for t,c in issues %}'{{t}}',{% endfor %}];
+    const issuesData = [{% for t,c in issues %}{{c}},{% endfor %}];
+    const jobsLabels = [{% for addr,cnt in business_jobs %}'{{addr}}',{% endfor %}];
+    const jobsData = [{% for addr,cnt in business_jobs %}{{cnt}},{% endfor %}];
+    const ratingLabels = ['1','2','3','4','5'];
+    const ratingData = [
+      {% for i in range(1,6) %}{{ ratings.get(i,0) }},{% endfor %}
+    ];
+
+    new Chart(document.getElementById('issuesChart'), {type:'bar', data:{labels:issuesLabels, datasets:[{label:'Top Issues', data:issuesData, backgroundColor:'#0d6efd'}]}});
+    new Chart(document.getElementById('jobsChart'), {type:'bar', data:{labels:jobsLabels, datasets:[{label:'Jobs', data:jobsData, backgroundColor:'#198754'}]}});
+    new Chart(document.getElementById('ratingChart'), {type:'pie', data:{labels:ratingLabels, datasets:[{label:'Ratings', data:ratingData, backgroundColor:['#dc3545','#fd7e14','#ffc107','#0d6efd','#198754']}]}});
+  </script>
+{% endblock %}

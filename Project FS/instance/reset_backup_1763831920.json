@@ -1,0 +1,14 @@
+{
+  "customers": [
+    {
+      "id": 1,
+      "name": "Birinda Beni",
+      "email": "birindabeni123@gmail.com"
+    },
+    {
+      "id": 2,
+      "name": "Internal Test",
+      "email": "itest@example.com"
+    }
+  ]
+}

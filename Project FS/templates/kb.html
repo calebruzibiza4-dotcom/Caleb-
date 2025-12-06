@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Knowledge Base</h1>
+    <a class="btn btn-primary" href="/kb/new">Add Article</a>
+  </div>
+  <form class="mb-3" method="get">
+    <div class="input-group">
+      <input name="q" value="{{q}}" class="form-control" placeholder="Search articles or tags...">
+      <button class="btn btn-outline-secondary">Search</button>
+    </div>
+  </form>
+  <div class="row g-3">
+    {% for a in articles %}
+      <div class="col-md-6">
+        <div class="card p-3 h-100">
+          <h5 class="mb-1">{{a.title}}</h5>
+          <div class="text-muted small mb-2">Tags: {{a.tags}}</div>
+          <p class="mb-0 text-muted">{{ a.content[:240] }}{% if a.content|length > 240 %}...{% endif %}</p>
+          <a class="stretched-link" href="{{ url_for('kb_view', id=a.id) }}"></a>
+        </div>
+      </div>
+    {% else %}
+      <div class="col-12"><div class="card p-3">No articles yet</div></div>
+    {% endfor %}
+  </div>
+{% endblock %}

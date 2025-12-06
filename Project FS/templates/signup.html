@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-7">
+      <div class="card p-4 shadow-sm">
+        <h2 class="h5">Create an Account</h2>
+        <p class="text-muted small">Fill the form to create an account. A staff member will verify it.</p>
+        <form method="post" action="/signup">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Name</label>
+              <input class="form-control" name="name" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Email</label>
+              <input class="form-control" name="email" type="email" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input class="form-control" name="phone">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input class="form-control" name="address">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input class="form-control" name="password" type="password" required>
+            <div class="form-text">This password will allow you to login once staff verifies the account.</div>
+          </div>
+          <div class="d-grid">
+            <button class="btn btn-primary">Create account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

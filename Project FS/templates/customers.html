@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Customers</h1>
+    <a class="btn btn-primary" href="/customers/new">Add Customer</a>
+  </div>
+  <form class="mb-3" method="get">
+    <div class="input-group">
+      <input name="q" value="{{q}}" class="form-control" placeholder="Search customers...">
+      <button class="btn btn-outline-secondary">Search</button>
+    </div>
+  </form>
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-light"><tr><th>Name</th><th>Email</th><th>Phone</th><th>Business</th><th>Verified</th><th></th></tr></thead>
+        <tbody>
+          {% for c in customers %}
+            <tr>
+              <td>{{c.name}}</td>
+              <td>{{c.email}}</td>
+              <td>{{c.phone}}</td>
+              <td>{{ 'Yes' if c.is_business else 'No' }}</td>
+              <td>{{ 'Yes' if c.verified else 'No' }}</td>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-primary" href="/customers/{{c.id}}/edit">Edit</a>
+                {% if current_user.is_authenticated and current_user.is_staff and not c.verified %}
+                  <form method="post" action="{{ url_for('approve_customer', id=c.id) }}" style="display:inline-block;margin-left:6px;">
+                    <button class="btn btn-sm btn-success" type="submit">Approve</button>
+                  </form>
+                {% endif %}
+              </td>
+            </tr>
+          {% else %}
+            <tr><td colspan="6">No customers yet</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ 'Edit Staff' if user else 'Create Staff User' }}</h1>
+  <form method="post">
+    <div class="mb-3">
+      <label class="form-label">Username</label>
+      <input class="form-control" name="username" value="{{ user.username if user else '' }}" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Password {{ '(leave blank to keep current)' if user else '' }}</label>
+      <input class="form-control" name="password" type="password" {{ '' if not user else '' }}>
+    </div>
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="checkbox" name="is_staff" id="is_staff" {% if user and user.is_staff %}checked{% endif %}>
+      <label class="form-check-label" for="is_staff">Is Staff</label>
+    </div>
+    <button class="btn btn-primary" type="submit">Save</button>
+    <a class="btn btn-secondary ms-2" href="{{ url_for('staff_list') }}">Cancel</a>
+  </form>
+{% endblock %}
